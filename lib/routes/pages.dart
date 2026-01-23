@@ -1,16 +1,33 @@
+import 'package:crudfirestoreandpaymentgateway/binding/app_binding.dart';
+import 'package:crudfirestoreandpaymentgateway/page/cart_page.dart';
+import 'package:crudfirestoreandpaymentgateway/page/mainnav_page.dart';
+import 'package:crudfirestoreandpaymentgateway/page/profile_page.dart';
 import 'package:crudfirestoreandpaymentgateway/routes/routes.dart';
 import 'package:get/get.dart';
 
-import '../binding/home_binding.dart';
 import '../page/home_page.dart';
 
 class AppPages {
   static final pages = [
-    // Home Page
+    GetPage(
+      name: AppRoutes.mainnavpage,
+      page: () => MainnavPage(),
+      binding: AppBinding(),
+    ),
     GetPage(
       name: AppRoutes.homePage,
       page: () => HomePage(),
-      binding: HomeBinding(),
+      binding: AppBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.cartpage,
+      page: () => CartPage(),
+      binding: AppBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => ProfilePage(),
+      binding: AppBinding(),
     ),
   ];
 }
