@@ -18,7 +18,7 @@ class FoodCard extends StatelessWidget {
           food.foodurl,
           width: 55,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => const Icon(Icons.restaurant, size: 40),
+          errorBuilder: (_, _, _) => const Icon(Icons.restaurant, size: 40),
         ),
         title: Text(
           food.foodname,
@@ -46,7 +46,7 @@ class FoodCard extends StatelessWidget {
                     ),
                   ),
                   TextField(
-                    controller: controller. descriptionController,
+                    controller: controller.descriptionController,
                     decoration: const InputDecoration(labelText: 'Deskripsi'),
                   ),
                   TextField(

@@ -34,8 +34,9 @@ class PaymentController extends GetxController {
       );
 
       final redirectUrl = (res['redirect_url'] ?? '').toString();
-      if (redirectUrl.isEmpty)
+      if (redirectUrl.isEmpty) {
         throw Exception('redirect_url kosong dari backend');
+      }
 
       final controller = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted)

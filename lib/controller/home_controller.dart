@@ -1,3 +1,5 @@
+// ignore_for_file: annotate_overrides, must_call_super
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
