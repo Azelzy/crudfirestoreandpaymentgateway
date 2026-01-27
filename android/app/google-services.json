@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "327380011364",
+    "project_id": "burgerqueen-68da0",
+    "storage_bucket": "burgerqueen-68da0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327380011364:android:f96708cf451b8ce62c1271",
+        "android_client_info": {
+          "package_name": "com.example.crudfirestoreandpaymentgateway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpkIaoKFlPpJsc2u3VLI9hGrKx4TCjTA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
