@@ -19,10 +19,10 @@ class MainnavPage extends StatelessWidget {
             if (isTablet)
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEB8D9F),
-                  border: const Border(
+                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFEB8D9F),
+                  border: Border(
                     bottom: BorderSide(color: Colors.black, width: 3),
                   ),
                 ),
@@ -30,7 +30,7 @@ class MainnavPage extends StatelessWidget {
                   'BURGER QUEEN',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 28,
                     fontWeight: FontWeight.w900,
                     letterSpacing: -1,
                   ),
@@ -55,17 +55,17 @@ class MainnavPage extends StatelessWidget {
             unselectedItemColor: Colors.black54,
             selectedLabelStyle: TextStyle(
               fontWeight: FontWeight.w900,
-              fontSize: isTablet ? 14 : 12,
+              fontSize: isTablet ? 13 : 12,
             ),
             unselectedLabelStyle: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: isTablet ? 14 : 12,
+              fontSize: isTablet ? 13 : 12,
             ),
-            iconSize: isTablet ? 32 : 28,
+            iconSize: isTablet ? 26 : 28,
             items: [
               BottomNavigationBarItem(
                 icon: Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(isTablet ? 6 : 8),
                   decoration: BoxDecoration(
                     color: controller.selectedIndex.value == 0
                         ? const Color(0xFF9B97D1)
@@ -83,7 +83,7 @@ class MainnavPage extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(isTablet ? 6 : 8),
                   decoration: BoxDecoration(
                     color: controller.selectedIndex.value == 1
                         ? const Color(0xFF9B97D1)
@@ -101,7 +101,7 @@ class MainnavPage extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(isTablet ? 6 : 8),
                   decoration: BoxDecoration(
                     color: controller.selectedIndex.value == 2
                         ? const Color(0xFF9B97D1)

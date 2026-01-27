@@ -19,7 +19,7 @@ class CartItem extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(isTablet ? 20 : 16),
+      padding: EdgeInsets.all(isTablet ? 24 : 16),
       decoration: BoxDecoration(
         color: const Color(0xFFFCDCB3),
         border: Border.all(color: Colors.black, width: 3),
@@ -79,7 +79,7 @@ class CartItem extends StatelessWidget {
         const SizedBox(height: 12),
         Row(
           children: [
-            _buildQuantityButton(Icons.remove),
+            _buildQuantityButton(Icons.remove, false),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 8),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -95,7 +95,7 @@ class CartItem extends StatelessWidget {
                 ),
               ),
             ),
-            _buildQuantityButton(Icons.add),
+            _buildQuantityButton(Icons.add, false),
           ],
         ),
       ],
@@ -114,16 +114,16 @@ class CartItem extends StatelessWidget {
               Text(
                 title.toUpperCase(),
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.w900,
                   letterSpacing: -0.5,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               Text(
                 subtitle,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 17,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -132,7 +132,7 @@ class CartItem extends StatelessWidget {
         ),
         Row(
           children: [
-            _buildQuantityButton(Icons.remove),
+            _buildQuantityButton(Icons.remove, true),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 12),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -148,7 +148,7 @@ class CartItem extends StatelessWidget {
                 ),
               ),
             ),
-            _buildQuantityButton(Icons.add),
+            _buildQuantityButton(Icons.add, true),
           ],
         ),
         const SizedBox(width: 20),
@@ -170,17 +170,17 @@ class CartItem extends StatelessWidget {
     );
   }
 
-  Widget _buildQuantityButton(IconData icon) {
+  Widget _buildQuantityButton(IconData icon, bool isTablet) {
     return Container(
-      width: 36,
-      height: 36,
+      width: isTablet ? 40 : 36,
+      height: isTablet ? 40 : 36,
       decoration: BoxDecoration(
         color: const Color(0xFFBDDAF0),
         border: Border.all(color: Colors.black, width: 2),
       ),
       child: IconButton(
         padding: EdgeInsets.zero,
-        icon: Icon(icon, size: 18, color: Colors.black),
+        icon: Icon(icon, size: isTablet ? 20 : 18, color: Colors.black),
         onPressed: () {},
       ),
     );

@@ -17,9 +17,9 @@ class HomePage extends StatelessWidget {
     final isTablet = screenWidth > 600;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: isTablet ? null : AppBar(
         title: const Text('FOOD MENU'),
-        toolbarHeight: isTablet ? 80 : 60,
+        toolbarHeight: 60,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -79,12 +79,12 @@ class HomePage extends StatelessWidget {
               },
               child: isTablet
                   ? GridView.builder(
-                      padding: EdgeInsets.all(isTablet ? 16 : 8),
+                      padding: const EdgeInsets.all(24),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: screenWidth > 900 ? 3 : 2,
-                        childAspectRatio: 1.2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
+                        childAspectRatio: 0.85,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
                       ),
                       itemCount: foods.length,
                       itemBuilder: (context, i) {
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
                       },
                     )
                   : ListView.builder(
-                      padding: EdgeInsets.all(isTablet ? 16 : 8),
+                      padding: const EdgeInsets.all(8),
                       itemCount: foods.length,
                       itemBuilder: (context, i) {
                         return Padding(
@@ -106,14 +106,14 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: Container(
-        width: isTablet ? 70 : 60,
-        height: isTablet ? 70 : 60,
+        width: isTablet ? 64 : 60,
+        height: isTablet ? 64 : 60,
         decoration: BoxDecoration(
           color: const Color(0xFF9B97D1),
           border: Border.all(color: Colors.black, width: 3),
         ),
         child: IconButton(
-          iconSize: isTablet ? 32 : 28,
+          iconSize: isTablet ? 28 : 26,
           onPressed: () {
             controller.clearControllers();
             Get.to(() => AddFoodPage(controller: controller));
