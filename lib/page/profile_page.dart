@@ -10,15 +10,8 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       appBar: isTablet ? null : AppBar(
-        title: const Text('PROFILE', style: TextStyle(fontWeight: FontWeight.black)),
+        title: const Text('PROFILE'),
         toolbarHeight: 60,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2),
-          child: Container(color: Colors.black, height: 2),
-        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -34,27 +27,21 @@ class ProfilePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // BAGIAN GAMBAR PNG
                     Container(
                       width: isTablet ? 160 : 140,
                       height: isTablet ? 160 : 140,
                       decoration: BoxDecoration(
                         color: const Color(0xFFEB8D9F),
                         border: Border.all(color: Colors.black, width: 4),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black,
-                            offset: Offset(4, 4),
-                          ),
-                        ],
                       ),
                       child: Image.asset(
-                        'assets/profile.png',
+                        'screenshots/juuya.png',
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
+                          // Fallback to icon if image not found
+                          return Icon(
                             Icons.person,
-                            size: 80,
+                            size: isTablet ? 90 : 80,
                             color: Colors.black,
                           );
                         },
