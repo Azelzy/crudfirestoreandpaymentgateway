@@ -9,32 +9,118 @@ class MainnavPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth > 600;
+
     return Obx(
       () => Scaffold(
         body: Column(
           children: [
-            Padding(padding: const EdgeInsets.fromLTRB(12, 12, 12, 6)),
-            Expanded(child: controller.pages[controller.selectedIndex.value]),
+            if (isTablet)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEB8D9F),
+                  border: const Border(
+                    bottom: BorderSide(color: Colors.black, width: 3),
+                  ),
+                ),
+                child: const Text(
+                  'BURGER QUEEN',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1,
+                  ),
+                ),
+              ),
+            Expanded(
+              child: controller.pages[controller.selectedIndex.value],
+            ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded),
-              label: "Home",
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(color: Colors.black, width: 3),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_rounded),
-              label: "Cart",
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: const Color(0xFFBDDAF0),
+            elevation: 0,
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.black54,
+            selectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: isTablet ? 14 : 12,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_2_rounded),
-              label: "Profile",
+            unselectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: isTablet ? 14 : 12,
             ),
-          ],
-          currentIndex: controller.selectedIndex.value,
-          onTap: controller.changePage,
+            iconSize: isTablet ? 32 : 28,
+            items: [
+              BottomNavigationBarItem(
+                icon: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: controller.selectedIndex.value == 0
+                        ? const Color(0xFF9B97D1)
+                        : Colors.transparent,
+                    border: Border.all(
+                      color: controller.selectedIndex.value == 0
+                          ? Colors.black
+                          : Colors.transparent,
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(Icons.home_rounded),
+                ),
+                label: "HOME",
+              ),
+              BottomNavigationBarItem(
+                icon: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: controller.selectedIndex.value == 1
+                        ? const Color(0xFF9B97D1)
+                        : Colors.transparent,
+                    border: Border.all(
+                      color: controller.selectedIndex.value == 1
+                          ? Colors.black
+                          : Colors.transparent,
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(Icons.shopping_cart_rounded),
+                ),
+                label: "CART",
+              ),
+              BottomNavigationBarItem(
+                icon: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: controller.selectedIndex.value == 2
+                        ? const Color(0xFF9B97D1)
+                        : Colors.transparent,
+                    border: Border.all(
+                      color: controller.selectedIndex.value == 2
+                          ? Colors.black
+                          : Colors.transparent,
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(Icons.person_2_rounded),
+                ),
+                label: "PROFILE",
+              ),
+            ],
+            currentIndex: controller.selectedIndex.value,
+            onTap: controller.changePage,
+          ),
         ),
       ),
     );
