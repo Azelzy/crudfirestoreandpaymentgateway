@@ -1,5 +1,11 @@
 # 🍔 Burger Queen - Dummy Food Ordering App
 
+<p align="left">
+  <img src="screenshots/juuya.png" alt="Add Food Tablet" width="400"/>
+</p>
+
+![Alt text](https://media1.tenor.com/m/EsokATs2x5cAAAAd/funny.gif)
+
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)
 [![GetX](https://img.shields.io/badge/GetX-8A2BE2?style=for-the-badge&logo=flutter&logoColor=white)](https://pub.dev/packages/get)
