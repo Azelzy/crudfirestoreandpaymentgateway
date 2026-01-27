@@ -15,7 +15,23 @@ class HomeController extends GetxController {
   final foodurlController = TextEditingController();
   final priceController = TextEditingController();
 
-  Stream<List<FoodModels>> get foods => _repository.getFood();
+  // Observable loading state
+  final isLoading = false.obs;
+  
+  // Observable foods list
+  final foods = <FoodModels>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadFoods();
+  }
+
+  void loadFoods() {
+    _repository.getFood().listen((foodList) {
+      foods.value = foodList;
+    });
+  }
 
   void addFood(BuildContext context) async {
     try {
@@ -43,6 +59,8 @@ class HomeController extends GetxController {
         return;
       }
 
+      isLoading.value = true;
+
       await _repository.addFood(
         FoodModels(
           id: '',
@@ -64,23 +82,30 @@ class HomeController extends GetxController {
       SnackbarHelper.showSuccess('Food added successfully!');
     } catch (e) {
       SnackbarHelper.showError('Failed to add food: ${e.toString()}');
+    } finally {
+      isLoading.value = false;
     }
   }
 
   void deleteFood(String id) async {
     try {
+      isLoading.value = true;
       await _repository.deleteFood(id);
       SnackbarHelper.showSuccess('Food deleted successfully!');
     } catch (e) {
       SnackbarHelper.showError('Failed to delete food: ${e.toString()}');
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  void dispose() {
+  @override
+  void onClose() {
     foodnameController.dispose();
     descriptionController.dispose();
     foodurlController.dispose();
     priceController.dispose();
+    super.onClose();
   }
 
   void fillForEdit(FoodModels food) {
@@ -116,6 +141,8 @@ class HomeController extends GetxController {
         return;
       }
 
+      isLoading.value = true;
+
       await _repository.updateFood(
         FoodModels(
           id: id,
@@ -137,6 +164,8 @@ class HomeController extends GetxController {
       SnackbarHelper.showSuccess('Food updated successfully!');
     } catch (e) {
       SnackbarHelper.showError('Failed to update food: ${e.toString()}');
+    } finally {
+      isLoading.value = false;
     }
   }
 
