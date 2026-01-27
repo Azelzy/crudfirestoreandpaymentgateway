@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../services/payment_service.dart';
+import '../utils/snackbar_helper.dart';
 
 class PaymentController extends GetxController {
   final PaymentService _service = PaymentService();
@@ -35,7 +36,7 @@ class PaymentController extends GetxController {
 
       final redirectUrl = (res['redirect_url'] ?? '').toString();
       if (redirectUrl.isEmpty) {
-        throw Exception('redirect_url kosong dari backend');
+        throw Exception('Redirect URL is empty from backend');
       }
 
       final controller = WebViewController()
@@ -49,23 +50,61 @@ class PaymentController extends GetxController {
                 final uri = Uri.tryParse(url);
                 final status =
                     uri?.queryParameters['transaction_status'] ?? 'unknown';
+                
+                if (status == 'success' || status == 'settlement') {
+                  SnackbarHelper.showSuccess('Payment successful!');
+                } else if (status == 'pending') {
+                  SnackbarHelper.showInfo('Payment pending...');
+                } else if (status == 'cancel' || status == 'expire') {
+                  SnackbarHelper.showError('Payment cancelled or expired');
+                } else {
+                  SnackbarHelper.showError('Payment failed: $status');
+                }
+                
                 Get.back(result: status);
                 return NavigationDecision.prevent;
               }
 
               return NavigationDecision.navigate;
             },
+            onPageStarted: (url) {
+              // Optional: show loading indicator
+            },
+            onPageFinished: (url) {
+              // Optional: hide loading indicator
+            },
+            onWebResourceError: (error) {
+              SnackbarHelper.showError(
+                'Page loading error: ${error.description}',
+              );
+            },
           ),
         )
         ..loadRequest(Uri.parse(redirectUrl));
 
       web.value = controller;
-    } catch (e) {
-      statusMessage.value = e.toString();
-      Get.snackbar('Error', e.toString());
-      Get.back();
-    } finally {
       isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      statusMessage.value = e.toString();
+      
+      String errorMessage = 'Failed to start payment';
+      if (e.toString().contains('SocketException')) {
+        errorMessage = 'No internet connection. Please check your network.';
+      } else if (e.toString().contains('TimeoutException')) {
+        errorMessage = 'Connection timeout. Please try again.';
+      } else if (e.toString().contains('FormatException')) {
+        errorMessage = 'Invalid response from server.';
+      } else {
+        errorMessage = 'Error: ${e.toString()}';
+      }
+      
+      SnackbarHelper.showError(errorMessage);
+      Get.back();
     }
+  }
+
+  void retryPayment() {
+    startPayment();
   }
 }

@@ -14,20 +14,20 @@ class AddFoodPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ADD FOOD'),
+        title: const Text(
+          'ADD FOOD',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         toolbarHeight: isTablet ? 80 : 60,
-        leading: Container(
-          margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 2),
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
+        centerTitle: true,
+        // Bagian border pada leading (tombol back) sudah dihapus
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Container(
+        // Border luar utama halaman tetap dipertahankan sesuai kode asli
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black, width: 3),
         ),
@@ -131,19 +131,23 @@ class AddFoodPage extends StatelessWidget {
     );
   }
 
+  // Helper widget untuk label input
   Widget _buildLabel(String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: const Color(0xFFBDDAF0),
-        border: Border.all(color: Colors.black, width: 2),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w900,
-          letterSpacing: 0.5,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: const Color(0xFFBDDAF0),
+          border: Border.all(color: Colors.black, width: 2),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 0.5,
+          ),
         ),
       ),
     );

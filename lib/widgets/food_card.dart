@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controller/home_controller.dart';
 import '../models/food_models.dart';
+import '../utils/snackbar_helper.dart';
 
 class FoodCard extends StatelessWidget {
   final FoodModels food;
@@ -45,8 +46,36 @@ class FoodCard extends StatelessWidget {
             child: Image.network(
               food.foodurl,
               fit: BoxFit.cover,
-              errorBuilder: (_, _, _) =>
-                  const Icon(Icons.restaurant, size: 40, color: Colors.black),
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                      strokeWidth: 3,
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  ),
+                );
+              },
+              errorBuilder: (_, _, _) {
+                return const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.broken_image, size: 30, color: Colors.black54),
+                    SizedBox(height: 4),
+                    Text(
+                      'Failed',
+                      style: TextStyle(fontSize: 10, color: Colors.black54),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
           const SizedBox(width: 12),
@@ -127,8 +156,36 @@ class FoodCard extends StatelessWidget {
                 food.foodurl,
                 fit: BoxFit.cover,
                 width: double.infinity,
-                errorBuilder: (_, _, _) =>
-                    const Icon(Icons.restaurant, size: 60, color: Colors.black),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                      strokeWidth: 3,
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+                errorBuilder: (_, _, _) {
+                  return const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.broken_image, size: 50, color: Colors.black54),
+                      SizedBox(height: 8),
+                      Text(
+                        'Image Failed',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -171,17 +228,23 @@ class FoodCard extends StatelessWidget {
           side: const BorderSide(color: Colors.black, width: 3),
         ),
         title: const Text(
-          'DELETE?',
+          'DELETE FOOD?',
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
-        content: Text('Delete ${food.foodname}?'),
+        content: Text(
+          'Are you sure you want to delete "${food.foodname}"? This action cannot be undone.',
+          style: const TextStyle(fontSize: 14),
+        ),
         actions: [
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black, width: 2),
             ),
             child: TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(context);
+                SnackbarHelper.showInfo('Deletion cancelled');
+              },
               child: const Text(
                 'CANCEL',
                 style: TextStyle(
@@ -198,8 +261,8 @@ class FoodCard extends StatelessWidget {
             ),
             child: TextButton(
               onPressed: () {
-                controller.deleteFood(food.id);
                 Navigator.pop(context);
+                controller.deleteFood(food.id);
               },
               child: const Text(
                 'DELETE',
@@ -268,7 +331,11 @@ class FoodCard extends StatelessWidget {
               border: Border.all(color: Colors.black, width: 2),
             ),
             child: TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(context);
+                controller.clearControllers();
+                SnackbarHelper.showInfo('Edit cancelled');
+              },
               child: const Text(
                 'CANCEL',
                 style: TextStyle(

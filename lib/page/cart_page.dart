@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:crudfirestoreandpaymentgateway/routes/routes.dart';
 import 'package:crudfirestoreandpaymentgateway/widgets/button_widget.dart';
 import 'package:crudfirestoreandpaymentgateway/widgets/cart_widget.dart';
+import 'package:crudfirestoreandpaymentgateway/utils/snackbar_helper.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -41,8 +42,6 @@ class CartPage extends StatelessWidget {
             ),
             SizedBox(height: isTablet ? 24 : 16),
             
-            // Note: Ensure these Widget names match your cart_widget.dart 
-            // If the file exports 'CartWidget', change 'CartItem' to 'CartWidget'
             const CartItem(
               title: "FAST FOOD",
               subtitle: "French Fries",
@@ -98,30 +97,32 @@ class CartPage extends StatelessWidget {
             AppButton(
               text: 'PURCHASE NOW',
               onPressed: () async {
-                final result = await Get.toNamed(AppRoutes.paymentpage);
+                try {
+                  // Navigate to payment
+                  final result = await Get.toNamed(AppRoutes.paymentpage);
 
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        side: const BorderSide(color: Colors.black, width: 2),
-                      ),
-                      backgroundColor: const Color(0xFFEB8D9F),
-                      elevation: 8,
-                      content: Text(
-                        'Payment Status: ${result ?? "CANCELLED"}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
+                  // Handle payment result
+                  if (result != null) {
+                    if (result == 'success' || result == 'settlement') {
+                      SnackbarHelper.showSuccess(
+                        'Payment completed successfully!',
+                      );
+                    } else if (result == 'pending') {
+                      SnackbarHelper.showInfo('Payment is pending...');
+                    } else if (result == 'cancel' || result == 'expire') {
+                      SnackbarHelper.showError('Payment was cancelled');
+                    } else {
+                      SnackbarHelper.showError('Payment status: $result');
+                    }
+                  } else {
+                    SnackbarHelper.showInfo('Payment was cancelled');
+                  }
+                } catch (e) {
+                  SnackbarHelper.showError(
+                    'Error processing payment: ${e.toString()}',
                   );
                 }
-              }, 
+              },
             ),
           ],
         ),
